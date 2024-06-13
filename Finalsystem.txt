@@ -1,0 +1,269 @@
+import java.util.Scanner;
+
+// Enum representing different types of locations
+enum Location {
+    SCHOOL,
+    SHOP,
+    OTHER
+}
+
+// Class representing a single camera in the surveillance system
+class Camera {
+    public boolean motionDetected;
+    public Location location;
+
+    // Constructor to initialize camera with location
+    public Camera(Location location) {
+        this.location = location;
+    }
+
+    // Method to simulate motion detection
+    public void detectMotion() {
+        motionDetected = true;
+    }
+
+    // Method to reset motion detection status
+    public void reset() {
+        motionDetected = false;
+    }
+
+    // Method to check if motion is detected
+    public boolean isMotionDetected() {
+        return motionDetected;
+    }
+
+    // Method to get the location of the camera
+    public Location getLocation() {
+        return location;
+    }
+}
+
+// Class representing the surveillance system
+class SurveillanceSystem {
+    public Camera[] cameras;
+
+    // Constructor to initialize the surveillance system with specified number of cameras
+    public SurveillanceSystem(int numCameras) {
+        cameras = new Camera[numCameras];
+    }
+
+    // Method to check if violent action is detected in any camera
+    public boolean isViolentActionDetected() {
+        for (Camera camera : cameras) {
+            if (camera.isMotionDetected()) {
+                // Perform some intelligent analysis here to determine if the detected motion is violent
+                // For simplicity, we'll just assume any motion is considered violent
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+// Main class
+public class NewClass {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the number of cameras in the surveillance system: ");
+        int numCameras = scanner.nextInt();
+
+        // Initialize surveillance system with specified number of cameras
+        SurveillanceSystem system = new SurveillanceSystem(numCameras);
+
+        // Simulate motion detection in each camera
+        for (int i = 0; i < numCameras; i++) {
+            System.out.print("Enter the location of camera " + (i + 1) + " (1 for School, 2 for Shop, 3 for Other): ");
+            int locationChoice = scanner.nextInt();
+            Location location;
+            switch (locationChoice) {
+                case 1:
+                    location = Location.SCHOOL;
+                    break;
+                case 2:
+                    location = Location.SHOP;
+                    break;
+                default:
+                    location = Location.OTHER;
+            }
+            Camera camera = new Camera(location);
+            System.out.print("Is motion detected in camera " + (i + 1) + "? (true/false): ");
+            boolean motionDetected = scanner.nextBoolean();
+            if (motionDetected) {
+                camera.detectMotion();
+            }
+            system.cameras[i] = camera;
+        }
+
+        // Check if violent action is detected in any camera
+        if (system.isViolentActionDetected()) {
+            System.out.println("Violent action detected in the surveillance area!");
+        } else {
+            System.out.println("No violent action detected in the surveillance area.");
+        }
+
+        scanner.close();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Wah
+
+
+
+package com.mycompany.mavenproject12;
+
+import java.util.Scanner;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
+// Enum representing different types of locations
+enum Location {
+    SCHOOL,
+    SHOP,
+    OTHER
+}
+
+// Class representing a single camera in the surveillance system
+class Camera {
+    private boolean motionDetected;
+    private Location location;
+    private LocalDateTime lastMotionTime;
+    private String name; // Add camera name or ID
+
+    // Constructor to initialize camera with location and name
+    public Camera(Location location, String name) {
+        this.location = location;
+        this.name = name;
+    }
+
+    // Method to simulate motion detection
+    public void detectMotion() {
+        motionDetected = true;
+        lastMotionTime = LocalDateTime.now();
+    }
+
+    // Method to reset motion detection status
+    public void reset() {
+        motionDetected = false;
+    }
+
+    // Method to check if motion is detected
+    public boolean isMotionDetected() {
+        return motionDetected;
+    }
+
+    // Method to get the location of the camera
+    public Location getLocation() {
+        return location;
+    }
+
+    // Method to get the last motion detection time
+    public LocalDateTime getLastMotionTime() {
+        return lastMotionTime;
+    }
+
+    // Method to get the camera name or ID
+    public String getName() {
+        return name;
+    }
+}
+
+// Class representing the surveillance system
+class SurveillanceSystem {
+    public Camera[] cameras;
+    private int hoursLimit;
+
+    // Constructor to initialize the surveillance system with specified number of cameras and hours limit
+    public SurveillanceSystem(int numCameras, int hoursLimit) {
+        cameras = new Camera[numCameras];
+        this.hoursLimit = hoursLimit;
+    }
+
+    // Method to check if violent action is detected in any camera within the specified hours limit
+    public boolean isViolentActionDetected() {
+        LocalDateTime currentTime = LocalDateTime.now();
+        for (Camera camera : cameras) {
+            if (camera.isMotionDetected() && ChronoUnit.HOURS.between(camera.getLastMotionTime(), currentTime) <= hoursLimit) {
+                // Perform some intelligent analysis here to determine if the detected motion is violent
+                // For simplicity, we'll just assume any motion is considered violent
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+// Main class
+public class Mavenproject12 {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the number of cameras in the surveillance system: ");
+        int numCameras = scanner.nextInt();
+        System.out.print("Enter the limit of hours for motion detection: ");
+        int hoursLimit = scanner.nextInt();
+
+        // Initialize surveillance system with specified number of cameras and hours limit
+        SurveillanceSystem system = new SurveillanceSystem(numCameras, hoursLimit);
+
+        // Simulate motion detection in each camera
+        for (int i = 0; i < numCameras; i++) {
+            System.out.print("Enter the name or ID of camera " + (i + 1) + ": ");
+            String cameraName = scanner.next();
+            System.out.print("Enter the location of camera " + cameraName + " (1 for School, 2 for Shop, 3 for Other): ");
+            int locationChoice = scanner.nextInt();
+            Location location;
+            switch (locationChoice) {
+                case 1:
+                    location = Location.SCHOOL;
+                    break;
+                case 2:
+                    location = Location.SHOP;
+                    break;
+                default:
+                    location = Location.OTHER;
+            }
+            Camera camera = new Camera(location, cameraName);
+            System.out.print("Is motion detected in camera " + cameraName + "? (true/false): ");
+            boolean motionDetected = scanner.nextBoolean();
+            if (motionDetected) {
+                camera.detectMotion();
+            }
+            system.cameras[i] = camera;
+        }
+
+        // Check if violent action is detected in any camera within the specified hours limit
+        if (system.isViolentActionDetected()) {
+            System.out.println("Violent action detected in the surveillance area within the specified hours limit!");
+        } else {
+            System.out.println("No violent action detected in the surveillance area within the specified hours limit.");
+        }
+
+        scanner.close();
+    }
+}
+
+
